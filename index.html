@@ -3,19 +3,290 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Product List</title>
+    <title>TechStore - Home of Tech Accessories</title>
     <link rel="stylesheet" href="styles/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
   </head>
   <body>
     <header>
-      <h1>Product List with Shopping Cart</h1>
+      <nav class="navbar">
+        <div class="logo">
+          <i class="fas fa-shopping-bag"></i>
+          <span><a href="#" aria-label="TechStore Home">TechStore</a></span>
+        </div>
+        <div class="nav-links">
+          <a href="#">New Arrivals</a>
+          <a href="#">Best Sellers</a>
+          <a href="#">Deals</a>
+          <a href="#">Support</a>
+        </div>
+        <div class="nav-right">
+          <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search products..."
+            class="search-input>
+            <i class="fas fa-search search-icon"></i>
+          </div>
+          <button class="cart-btn" aria-label="Shopping cart">
+            <span class="cart-icon">🛒</span>
+            <span class="cart-count">0</span>
+          </button>
+          <div class="user-icon">
+            <i class="fas fa-user"></i>
+          </div>
+        </div>
+      </nav>
     </header>
-    <main id="product-list">
-      <!-- Product list will be dynamically generated here -->
+
+    <main>
+      <section class="featured">
+        <h1>Featured Products</h1>
+        <p>Discover our collection of premium tech accessories</p>
+
+        <div class="products-grid" id="productsContainer">
+          <!-- Products will be inserted here by JavaScript -->
+        </div>
+      </section>
     </main>
-    <footer>
-      <p>&copy; 2024 Edor Godwin Etornam</p>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+      <div class="cart-header">
+        <h2>Shopping Cart</h2>
+        <button class="close-cart" aria-label="Close cart">&times;</button>
+      </div>
+      <div class="cart-items">
+        <!-- Cart items will be inserted here -->
+      </div>
+      <div class="cart-footer">
+        <div class="cart-total">
+          <span>Total:</span>
+          <span class="total-amount">$0.00</span>
+        </div>
+        <button class="checkout-btn">Proceed to Checkout</button>
+      </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Product Detail Modal -->
+    <div class="product-detail-modal" id="productDetailModal">
+      <div class="modal-content">
+        <button class="close-modal" aria-label="Close product details">
+          &times;
+        </button>
+        <div class="product-detail-content">
+          <div class="product-detail-left">
+            <div class="product-main-image">
+              <img src="" alt="" id="modalMainImage" />
+            </div>
+            <div class="product-thumbnails">
+              <!-- Thumbnail images will be inserted here -->
+            </div>
+          </div>
+          <div class="product-detail-right">
+            <h2 class="product-detail-title"></h2>
+            <div class="product-detail-price"></div>
+            <div class="product-detail-description"></div>
+
+            <div class="product-specs">
+              <h3>Specifications</h3>
+              <ul class="specs-list">
+                <!-- Specs will be inserted here -->
+              </ul>
+            </div>
+
+            <div class="add-to-cart-section">
+              <div class="quantity-selector">
+                <button class="qty-btn minus">-</button>
+                <input type="number" value="1" min="1" class="qty-input" />
+                <button class="qty-btn plus">+</button>
+              </div>
+              <button class="add-to-cart-detail">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="checkout-modal" id="checkoutModal">
+      <div class="checkout-content">
+        <button class="close-checkout" aria-label="Close checkout">
+          &times;
+        </button>
+        <div class="checkout-grid">
+          <!-- Order Summary Section -->
+          <div class="order-summary">
+            <h2>Order Summary</h2>
+            <div class="summary-items">
+              <!-- Items will be inserted here -->
+            </div>
+            <div class="summary-totals">
+              <div class="subtotal">
+                <span>Subtotal</span>
+                <span class="subtotal-amount">$0.00</span>
+              </div>
+              <div class="shipping">
+                <span>Shipping</span>
+                <span class="shipping-amount">$0.00</span>
+              </div>
+              <div class="tax">
+                <span>Tax (10%)</span>
+                <span class="tax-amount">$0.00</span>
+              </div>
+              <div class="total">
+                <span>Total</span>
+                <span class="total-amount">$0.00</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Checkout Form Section -->
+          <div class="checkout-form-container">
+            <h2>Shipping Information</h2>
+            <form id="checkoutForm" class="checkout-form" novalidate>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="firstName">First Name</label>
+                  <input type="text" id="firstName" name="firstName" required />
+                  <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                  <label for="lastName">Last Name</label>
+                  <input type="text" id="lastName" name="lastName" required />
+                  <span class="error-message"></span>
+                </div>
+                <div class="form-group full-width">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" name="email" required />
+                  <span class="error-message"></span>
+                </div>
+                <div class="form-group full-width">
+                  <label for="address">Street Address</label>
+                  <input type="text" id="address" name="address" required />
+                  <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                  <label for="city">City</label>
+                  <input type="text" id="city" name="city" required />
+                  <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                  <label for="state">State</label>
+                  <select id="state" name="state" required>
+                    <option value="">Select State</option>
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <!-- Add other states -->
+                  </select>
+                  <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                  <label for="zipCode">ZIP Code</label>
+                  <input type="text" id="zipCode" name="zipCode" required />
+                  <span class="error-message"></span>
+                </div>
+              </div>
+
+              <h2>Payment Information</h2>
+              <div class="form-grid">
+                <div class="form-group full-width">
+                  <label for="cardNumber">Card Number</label>
+                  <input
+                    type="text"
+                    id="cardNumber"
+                    name="cardNumber"
+                    required
+                  />
+                  <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                  <label for="expiryDate">Expiry Date</label>
+                  <input
+                    type="text"
+                    id="expiryDate"
+                    name="expiryDate"
+                    placeholder="MM/YY"
+                    required
+                  />
+                  <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                  <label for="cvv">CVV</label>
+                  <input type="text" id="cvv" name="cvv" required />
+                  <span class="error-message"></span>
+                </div>
+              </div>
+
+              <button type="submit" class="place-order-btn">Place Order</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Secton -->
+
+    <footer class="footer">
+      <div class="footer-content">
+        <!-- About Us Section -->
+        <div class="footer-section">
+          <h3>About Us</h3>
+          <p>
+            We provide high-quality tech accessories for professionals and
+            enthusiasts alike. Our products are carefully selected for quality
+            and performance.
+          </p>
+        </div>
+
+        <!-- Quick Links Section -->
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#">New Arrivals</a></li>
+            <li><a href="#">Best Sellers</a></li>
+            <li><a href="#">Deals</a></li>
+            <li><a href="#">Gift Cards</a></li>
+          </ul>
+        </div>
+
+        <!-- Customer Service Section -->
+        <div class="footer-section">
+          <h3>Customer Service</h3>
+          <ul>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Shipping Policy</a></li>
+            <li><a href="#">Returns & Exchanges</a></li>
+            <li><a href="#">FAQ</a></li>
+          </ul>
+        </div>
+
+        <!-- Newsletter Section -->
+        <div class="footer-section">
+          <h3>Newsletter</h3>
+          <p>
+            Subscribe to receive updates, access to exclusive deals, and more.
+          </p>
+          <div class="newsletter-form">
+            <input type="email" placeholder="Enter your email" />
+            <button class="subscribe-btn">Subscribe</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Copyright -->
+      <div class="footer-bottom">
+        <p>&copy; 2024 TechStore. All rights reserved.</p>
+      </div>
     </footer>
-    <script src="scripts/app.js" defer></script>
+
+    <script src="scripts/app.js"></script>
   </body>
 </html>
